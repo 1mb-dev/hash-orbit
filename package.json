@@ -19,7 +19,8 @@
     "coverage": "vitest run --coverage",
     "lint": "eslint .",
     "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check .",
+    "prepare": "husky"
   },
   "keywords": [
     "consistent-hashing",
@@ -45,6 +46,8 @@
     "@vitest/coverage-v8": "^4.0.12",
     "eslint": "^9.39.1",
     "eslint-config-prettier": "^10.1.8",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.7",
     "prettier": "^3.6.2",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.47.0",
@@ -52,5 +55,14 @@
   },
   "dependencies": {
     "murmur-hash": "^2.0.0"
+  },
+  "lint-staged": {
+    "*.ts": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{json,md}": [
+      "prettier --write"
+    ]
   }
 }
