@@ -54,6 +54,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Deduplicated code and removed redundant comments
 - Improved code maintainability and consistency
 
+### Removed
+
+- Codecov integration (coverage still verified locally via vitest)
+
 ## [0.1.0] - 2025-11-20
 
 ### Added
