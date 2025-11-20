@@ -12,6 +12,8 @@
     }
   },
   "scripts": {
+    "clean": "rm -rf dist",
+    "build": "npm run clean && tsc --project tsconfig.build.json",
     "test": "vitest",
     "lint": "eslint .",
     "format": "prettier --write .",
