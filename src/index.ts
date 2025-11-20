@@ -40,11 +40,29 @@ export class HashOrbit {
   }
 
   /**
+   * Validates a string identifier (node or key)
+   * @param value - The identifier to validate
+   * @param name - The name of the parameter for error messages
+   * @throws Error if the identifier is invalid
+   * @private
+   */
+  private validateIdentifier(value: string, name: string): void {
+    if (!value || value.length === 0) {
+      throw new Error(`${name} cannot be empty`);
+    }
+    if (value.length > 1000) {
+      throw new Error(`${name} exceeds maximum length of 1000 characters`);
+    }
+  }
+
+  /**
    * Adds a node to the consistent hash ring
    * Creates virtual nodes (replicas) for better key distribution
    * @param node - The node identifier to add
+   * @throws Error if the node identifier is invalid
    */
   add(node: string): void {
+    this.validateIdentifier(node, 'Node identifier');
     for (let i = 0; i < this.replicas; i++) {
       const key = `${node}:${i}`;
       const position = hash32(key);
@@ -57,8 +75,10 @@ export class HashOrbit {
    * Removes a node from the consistent hash ring
    * Cleans up all virtual nodes for the given physical node
    * @param node - The node identifier to remove
+   * @throws Error if the node identifier is invalid
    */
   remove(node: string): void {
+    this.validateIdentifier(node, 'Node identifier');
     for (let i = 0; i < this.replicas; i++) {
       const key = `${node}:${i}`;
       const position = hash32(key);
@@ -93,8 +113,10 @@ export class HashOrbit {
    * Gets the node responsible for a given key
    * @param key - The key to look up
    * @returns The node identifier, or undefined if the ring is empty
+   * @throws Error if the key is invalid
    */
   get(key: string): string | undefined {
+    this.validateIdentifier(key, 'Key');
     if (this.ring.size === 0) return undefined;
 
     const position = hash32(key);
@@ -111,8 +133,10 @@ export class HashOrbit {
    * @param key - The key to look up
    * @param count - Number of unique nodes to return
    * @returns Array of node identifiers (up to count unique nodes)
+   * @throws Error if the key is invalid
    */
   getN(key: string, count: number): string[] {
+    this.validateIdentifier(key, 'Key');
     if (this.ring.size === 0 || count <= 0) return [];
 
     const result: string[] = [];
@@ -153,6 +177,30 @@ export class HashOrbit {
     // Return unique nodes from the ring
     const uniqueNodes = new Set(this.ring.values());
     return Array.from(uniqueNodes);
+  }
+
+  /**
+   * Serializes the hash ring to a JSON-compatible object
+   * @returns Object containing nodes and configuration
+   */
+  toJSON(): { nodes: string[]; replicas: number } {
+    return {
+      nodes: this.nodes,
+      replicas: this.replicas,
+    };
+  }
+
+  /**
+   * Creates a HashOrbit instance from a serialized object
+   * @param json - The serialized ring data
+   * @returns A new HashOrbit instance with the same configuration and nodes
+   */
+  static fromJSON(json: { nodes: string[]; replicas: number }): HashOrbit {
+    const ring = new HashOrbit({ replicas: json.replicas });
+    for (const node of json.nodes) {
+      ring.add(node);
+    }
+    return ring;
   }
 
   /**

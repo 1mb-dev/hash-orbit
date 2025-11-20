@@ -335,4 +335,137 @@ describe('HashOrbit', () => {
       }
     });
   });
+
+  describe('Input Validation', () => {
+    let ring: HashOrbit;
+
+    beforeEach(() => {
+      ring = new HashOrbit();
+    });
+
+    test('throws error when adding empty node identifier', () => {
+      expect(() => ring.add('')).toThrow('Node identifier cannot be empty');
+    });
+
+    test('throws error when adding node identifier exceeding max length', () => {
+      const longId = 'a'.repeat(1001);
+      expect(() => ring.add(longId)).toThrow('Node identifier exceeds maximum length');
+    });
+
+    test('throws error when removing empty node identifier', () => {
+      expect(() => ring.remove('')).toThrow('Node identifier cannot be empty');
+    });
+
+    test('throws error when getting with empty key', () => {
+      ring.add('server-1');
+      expect(() => ring.get('')).toThrow('Key cannot be empty');
+    });
+
+    test('throws error when getting with key exceeding max length', () => {
+      ring.add('server-1');
+      const longKey = 'k'.repeat(1001);
+      expect(() => ring.get(longKey)).toThrow('Key exceeds maximum length');
+    });
+
+    test('throws error when getN called with empty key', () => {
+      ring.add('server-1');
+      expect(() => ring.getN('', 1)).toThrow('Key cannot be empty');
+    });
+
+    test('accepts valid node identifiers and keys', () => {
+      expect(() => {
+        ring.add('valid-node-123');
+        ring.get('valid-key-456');
+        ring.remove('valid-node-123');
+      }).not.toThrow();
+    });
+  });
+
+  describe('Serialization', () => {
+    test('toJSON returns nodes and replicas', () => {
+      const ring = new HashOrbit({ replicas: 100 });
+      ring.add('server-1');
+      ring.add('server-2');
+      ring.add('server-3');
+
+      const json = ring.toJSON();
+
+      expect(json).toEqual({
+        nodes: expect.arrayContaining(['server-1', 'server-2', 'server-3']),
+        replicas: 100,
+      });
+      expect(json.nodes).toHaveLength(3);
+    });
+
+    test('fromJSON recreates ring with same configuration', () => {
+      const original = new HashOrbit({ replicas: 75 });
+      original.add('node-a');
+      original.add('node-b');
+
+      const json = original.toJSON();
+      const restored = HashOrbit.fromJSON(json);
+
+      expect(restored.size).toBe(original.size);
+      expect(restored.nodes.sort()).toEqual(original.nodes.sort());
+      expect(restored.toString()).toContain('replicas=75');
+    });
+
+    test('fromJSON preserves consistent hashing behavior', () => {
+      const original = new HashOrbit();
+      original.add('server-1');
+      original.add('server-2');
+      original.add('server-3');
+
+      const json = original.toJSON();
+      const restored = HashOrbit.fromJSON(json);
+
+      // Same key should route to same node
+      const key = 'test-key-123';
+      expect(restored.get(key)).toBe(original.get(key));
+    });
+
+    test('fromJSON works with empty ring', () => {
+      const original = new HashOrbit();
+      const json = original.toJSON();
+      const restored = HashOrbit.fromJSON(json);
+
+      expect(restored.size).toBe(0);
+      expect(restored.nodes).toEqual([]);
+    });
+
+    test('serialization round-trip preserves all nodes', () => {
+      const original = new HashOrbit({ replicas: 50 });
+      const nodes = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
+
+      nodes.forEach((node) => original.add(node));
+
+      const restored = HashOrbit.fromJSON(original.toJSON());
+
+      expect(restored.size).toBe(nodes.length);
+      expect(restored.nodes.sort()).toEqual(nodes.sort());
+    });
+  });
+
+  describe('Scale Testing', () => {
+    test('handles 1000 nodes', () => {
+      const ring = new HashOrbit();
+
+      // Add 1000 nodes
+      for (let i = 0; i < 1000; i++) {
+        ring.add(`node-${i}`);
+      }
+
+      expect(ring.size).toBe(1000);
+
+      // Verify lookups still work with large ring
+      const node = ring.get('test-key');
+      expect(node).toBeDefined();
+      expect(typeof node).toBe('string');
+
+      // Verify getN works with large ring
+      const nodes = ring.getN('test-key', 5);
+      expect(nodes).toHaveLength(5);
+      expect(new Set(nodes).size).toBe(5); // All unique
+    }, 30000); // 30 second timeout for large scale test
+  });
 });

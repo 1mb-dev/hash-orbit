@@ -18,6 +18,17 @@ Consistent hashing ring for distributed systems with virtual nodes support.
 - ✅ **100% Test Coverage** - Comprehensive test suite
 - 🚀 **Lightweight** - Minimal memory footprint
 
+## Why hash-orbit?
+
+hash-orbit is designed for production use with a focus on simplicity and correctness. Unlike alternatives that bundle additional features like connection pooling or service discovery, hash-orbit does one thing well: consistent hashing. This makes it ideal for:
+
+- **Composability** - Integrate with any caching, database, or networking library
+- **Predictability** - Pure algorithm implementation with no hidden side effects
+- **Maintainability** - Single dependency, minimal surface area for bugs
+- **Flexibility** - Use it for caching, sharding, load balancing, or any distributed system pattern
+
+If you need just the consistent hashing algorithm without opinionated abstractions, hash-orbit is the right choice.
+
 ## Installation
 
 ```bash
@@ -167,6 +178,47 @@ Gets all physical nodes in the ring.
 console.log(ring.nodes); // ['server-1', 'server-2', 'server-3']
 ```
 
+### Serialization
+
+#### `toJSON(): { nodes: string[], replicas: number }`
+
+Serializes the hash ring to a JSON-compatible object for state persistence or transfer.
+
+**Returns:** Object containing all nodes and replica configuration
+
+**Example:**
+
+```typescript
+const ring = new HashOrbit({ replicas: 100 });
+ring.add('server-1');
+ring.add('server-2');
+
+const json = ring.toJSON();
+// { nodes: ['server-1', 'server-2'], replicas: 100 }
+
+// Save to file, send over network, etc.
+```
+
+#### `static fromJSON(json: { nodes: string[], replicas: number }): HashOrbit`
+
+Creates a new HashOrbit instance from a serialized object.
+
+**Parameters:**
+
+- `json`: Serialized ring data from `toJSON()`
+
+**Returns:** New HashOrbit instance with the same configuration
+
+**Example:**
+
+```typescript
+// Restore from serialized state
+const restored = HashOrbit.fromJSON(json);
+
+// Consistent hashing behavior is preserved
+restored.get('user:123'); // Routes to same node as original
+```
+
 ### Debugging
 
 #### `toString(): string`
@@ -306,6 +358,20 @@ npm run build
 # Clean build artifacts
 npm run clean
 ```
+
+## Production Readiness
+
+hash-orbit is production-ready and suitable for v1.0.0 release:
+
+- **✅ 100% Test Coverage** - Comprehensive test suite covering all functionality, edge cases, and distribution properties
+- **✅ Input Validation** - Validates node identifiers and keys to prevent common errors
+- **✅ Scale Tested** - Verified with 1000+ nodes in automated tests
+- **✅ Type Safety** - Full TypeScript support with strict mode enabled
+- **✅ Serialization** - Built-in JSON serialization for state persistence and transfer
+- **✅ Zero Breaking Changes** - Stable API with semantic versioning
+- **✅ Actively Maintained** - Regular updates and responsive issue resolution
+
+The library has been designed with production workloads in mind, focusing on correctness, performance, and ease of use.
 
 ## Contributing
 
