@@ -54,6 +54,20 @@ export class HashOrbit {
   }
 
   /**
+   * Removes a node from the consistent hash ring
+   * Cleans up all virtual nodes for the given physical node
+   * @param node - The node identifier to remove
+   */
+  remove(node: string): void {
+    for (let i = 0; i < this.replicas; i++) {
+      const key = `${node}:${i}`;
+      const position = hash32(key);
+      this.ring.delete(position);
+    }
+    this.sortedKeys = [...this.ring.keys()].sort((a, b) => a - b);
+  }
+
+  /**
    * Binary search to find the first position >= target (lower bound)
    * @param target - The hash position to search for
    * @returns Index of the first element >= target, or sortedKeys.length if not found
