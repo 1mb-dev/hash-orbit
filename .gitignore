@@ -3,7 +3,8 @@ todos/
 
 # Dependencies
 node_modules/
-package-lock.json
+
+# Alternative package managers (if not using npm)
 yarn.lock
 pnpm-lock.yaml
 
