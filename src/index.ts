@@ -54,6 +54,45 @@ export class HashOrbit {
   }
 
   /**
+   * Binary search to find the first position >= target (lower bound)
+   * @param target - The hash position to search for
+   * @returns Index of the first element >= target, or sortedKeys.length if not found
+   * @private
+   */
+  private binarySearch(target: number): number {
+    let left = 0;
+    let right = this.sortedKeys.length;
+
+    while (left < right) {
+      const mid = Math.floor((left + right) / 2);
+      if (this.sortedKeys[mid]! < target) {
+        left = mid + 1;
+      } else {
+        right = mid;
+      }
+    }
+
+    return left;
+  }
+
+  /**
+   * Gets the node responsible for a given key
+   * @param key - The key to look up
+   * @returns The node identifier, or undefined if the ring is empty
+   */
+  get(key: string): string | undefined {
+    if (this.ring.size === 0) return undefined;
+
+    const position = hash32(key);
+    let idx = this.binarySearch(position);
+
+    // Wrap around if necessary
+    if (idx >= this.sortedKeys.length) idx = 0;
+
+    return this.ring.get(this.sortedKeys[idx]!);
+  }
+
+  /**
    * Gets the number of nodes in the ring
    * @returns The number of physical nodes
    */
