@@ -5,7 +5,7 @@
 
 import { hash32 } from 'murmur-hash';
 
-// Re-export hash32 for potential external use
+// Export hash function for debugging and custom use cases
 export { hash32 };
 
 /**
