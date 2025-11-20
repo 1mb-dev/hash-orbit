@@ -37,11 +37,20 @@ export class HashOrbit {
     this.replicas = options.replicas ?? 150;
     this.ring = new Map();
     this.sortedKeys = [];
+  }
 
-    // sortedKeys will be populated by add() method
-    // replicas will be used by add() to create virtual nodes
-    void this.replicas;
-    void this.sortedKeys;
+  /**
+   * Adds a node to the consistent hash ring
+   * Creates virtual nodes (replicas) for better key distribution
+   * @param node - The node identifier to add
+   */
+  add(node: string): void {
+    for (let i = 0; i < this.replicas; i++) {
+      const key = `${node}:${i}`;
+      const position = hash32(key);
+      this.ring.set(position, node);
+    }
+    this.sortedKeys = [...this.ring.keys()].sort((a, b) => a - b);
   }
 
   /**
@@ -62,5 +71,13 @@ export class HashOrbit {
     // Return unique nodes from the ring
     const uniqueNodes = new Set(this.ring.values());
     return Array.from(uniqueNodes);
+  }
+
+  /**
+   * Returns a string representation of the ring for debugging
+   * @returns Debug information about the ring
+   */
+  toString(): string {
+    return `HashOrbit(nodes=${this.size}, positions=${this.sortedKeys.length}, replicas=${this.replicas})`;
   }
 }
