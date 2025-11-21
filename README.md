@@ -1,7 +1,7 @@
 # hash-orbit
 
 [![CI](https://github.com/vnykmshr/hash-orbit/actions/workflows/ci.yml/badge.svg)](https://github.com/vnykmshr/hash-orbit/actions/workflows/ci.yml)
-[![npm version](https://badge.fury.io/js/hash-orbit.svg)](https://www.npmjs.com/package/hash-orbit)
+[![npm version](https://img.shields.io/npm/v/hash-orbit.svg)](https://www.npmjs.com/package/hash-orbit)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 Consistent hashing implementation for distributed systems. Routes keys to nodes with minimal redistribution when the cluster changes.
