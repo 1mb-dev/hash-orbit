@@ -4,7 +4,7 @@
  * Demonstrates load balancing with session affinity where user sessions
  * consistently route to the same application server.
  *
- * Run: npx ts-node examples/sticky-load-balancing.ts
+ * Run: npx tsx examples/sticky-load-balancing.ts
  */
 
 import { HashOrbit } from '../src/index.js';

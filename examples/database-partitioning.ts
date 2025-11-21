@@ -4,7 +4,7 @@
  * Demonstrates how to route database queries to the correct shard
  * based on user ID or partition key using consistent hashing.
  *
- * Run: npx ts-node examples/database-partitioning.ts
+ * Run: npx tsx examples/database-partitioning.ts
  */
 
 import { HashOrbit } from '../src/index.js';

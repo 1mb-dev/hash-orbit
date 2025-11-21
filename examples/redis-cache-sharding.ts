@@ -4,7 +4,7 @@
  * Demonstrates how to distribute cache keys across multiple Redis instances
  * using consistent hashing for horizontal scalability.
  *
- * Run: npx ts-node examples/redis-cache-sharding.ts
+ * Run: npx tsx examples/redis-cache-sharding.ts
  */
 
 import { HashOrbit } from '../src/index.js';

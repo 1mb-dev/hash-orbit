@@ -4,7 +4,7 @@
  * Demonstrates using getN() for multi-node data replication across
  * cache servers for high availability.
  *
- * Run: npx ts-node examples/cache-replication.ts
+ * Run: npx tsx examples/cache-replication.ts
  */
 
 import { HashOrbit } from '../src/index.js';

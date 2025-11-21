@@ -7,8 +7,8 @@ This directory contains practical examples demonstrating real-world use cases of
 All examples are standalone TypeScript files that can be run with:
 
 ```bash
-# Using ts-node
-npx ts-node examples/redis-cache-sharding.ts
+# Using tsx (recommended)
+npx tsx examples/redis-cache-sharding.ts
 
 # Or compile and run
 npx tsc examples/redis-cache-sharding.ts --target ES2022 --module NodeNext
