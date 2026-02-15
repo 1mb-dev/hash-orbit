@@ -50,7 +50,7 @@
   },
   "homepage": "https://github.com/1mb-dev/hash-orbit#readme",
   "devDependencies": {
-    "@eslint/js": "^9.39.1",
+    "@eslint/js": "^10.0.1",
     "@vitest/coverage-v8": "^4.0.12",
     "eslint": "^9.39.1",
     "eslint-config-prettier": "^10.1.8",
