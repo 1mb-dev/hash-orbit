@@ -43,12 +43,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/vnykmshr/hash-orbit.git"
+    "url": "git+https://github.com/1mb-dev/hash-orbit.git"
   },
   "bugs": {
-    "url": "https://github.com/vnykmshr/hash-orbit/issues"
+    "url": "https://github.com/1mb-dev/hash-orbit/issues"
   },
-  "homepage": "https://github.com/vnykmshr/hash-orbit#readme",
+  "homepage": "https://github.com/1mb-dev/hash-orbit#readme",
   "devDependencies": {
     "@eslint/js": "^9.39.1",
     "@vitest/coverage-v8": "^4.0.12",

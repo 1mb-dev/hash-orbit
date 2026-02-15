@@ -247,10 +247,10 @@ See release checklist in [CHANGELOG.md](../CHANGELOG.md) for detailed steps.
 
 ## Questions?
 
-- **Bug reports**: [Open an issue](https://github.com/vnykmshr/hash-orbit/issues/new)
-- **Feature requests**: [Open an issue](https://github.com/vnykmshr/hash-orbit/issues/new)
+- **Bug reports**: [Open an issue](https://github.com/1mb-dev/hash-orbit/issues/new)
+- **Feature requests**: [Open an issue](https://github.com/1mb-dev/hash-orbit/issues/new)
 - **Security issues**: See [SECURITY.md](SECURITY.md)
-- **General questions**: [Start a discussion](https://github.com/vnykmshr/hash-orbit/discussions)
+- **General questions**: [Start a discussion](https://github.com/1mb-dev/hash-orbit/discussions)
 
 ## License
 

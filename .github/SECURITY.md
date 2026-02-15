@@ -16,7 +16,7 @@ We take the security of hash-orbit seriously. If you discover a security vulnera
 
 The preferred method for reporting security vulnerabilities is through GitHub's private security reporting:
 
-1. Navigate to the [Security Advisories](https://github.com/vnykmshr/hash-orbit/security/advisories) page
+1. Navigate to the [Security Advisories](https://github.com/1mb-dev/hash-orbit/security/advisories) page
 2. Click "Report a vulnerability"
 3. Fill out the advisory form with details about the vulnerability
 4. Submit the report
@@ -67,7 +67,7 @@ When using hash-orbit:
 
 For security-related questions that are not vulnerability reports, you can:
 
-- Open a discussion in the [GitHub Discussions](https://github.com/vnykmshr/hash-orbit/discussions)
+- Open a discussion in the [GitHub Discussions](https://github.com/1mb-dev/hash-orbit/discussions)
 - Open a regular issue if it's not sensitive
 
 Thank you for helping keep hash-orbit and its users safe!

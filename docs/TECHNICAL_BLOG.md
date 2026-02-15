@@ -443,7 +443,7 @@ The tradeoffs are clear:
 
 If you're building cache sharding, database partitioning, or sticky load balancing, consistent hashing likely fits. If you're just distributing load and don't care which server handles which request, simpler approaches suffice.
 
-**Read the code:** [github.com/vnykmshr/hash-orbit](https://github.com/vnykmshr/hash-orbit)
+**Read the code:** [github.com/1mb-dev/hash-orbit](https://github.com/1mb-dev/hash-orbit)
 **Install:** `npm install hash-orbit`
 
 ---

@@ -72,6 +72,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - CI/CD with GitHub Actions
 - MIT License
 
-[unreleased]: https://github.com/vnykmshr/hash-orbit/compare/v1.0.0...HEAD
-[1.0.0]: https://github.com/vnykmshr/hash-orbit/releases/tag/v1.0.0
-[0.1.0]: https://github.com/vnykmshr/hash-orbit/releases/tag/v0.1.0
+[unreleased]: https://github.com/1mb-dev/hash-orbit/compare/v1.0.0...HEAD
+[1.0.0]: https://github.com/1mb-dev/hash-orbit/releases/tag/v1.0.0
+[0.1.0]: https://github.com/1mb-dev/hash-orbit/releases/tag/v0.1.0
