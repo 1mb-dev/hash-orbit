@@ -17,6 +17,26 @@ Traditional modulo hashing (`hash(key) % N`) reassigns most keys when nodes are 
 
 Pure algorithm implementation with no opinions about your infrastructure. Compose it with whatever caching, database, or networking library you use.
 
+## When to Use This
+
+Use hash-orbit when you need consistent key-to-node routing in a distributed system and want a pure algorithm without infrastructure opinions.
+
+**Choose hash-orbit over [hashring](https://www.npmjs.com/package/hashring) when:**
+
+- You want a focused, dependency-free implementation (hashring pulls in 5+ dependencies)
+- You need `getN()` for replication (route a key to multiple nodes)
+- You need serialization/deserialization (`toJSON`/`fromJSON`) for ring state transfer
+
+**Choose hashring instead when:**
+
+- You need weighted nodes (hash-orbit treats all nodes equally)
+- You need built-in server failover and connection management
+
+**Choose a managed solution (Redis Cluster, DynamoDB) when:**
+
+- You don't want to manage the routing layer yourself
+- You need automatic rebalancing and failure detection
+
 ## Installation
 
 ```bash
