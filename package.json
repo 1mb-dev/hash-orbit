@@ -39,7 +39,7 @@
   "author": "vnykmshr",
   "license": "MIT",
   "engines": {
-    "node": ">=20.0.0"
+    "node": ">=22"
   },
   "repository": {
     "type": "git",
